@@ -20,7 +20,8 @@ class Query(graphene.ObjectType):
                           description='Gets single User by ID')
 
     def resolve_user(self, info, id):
-        return User.objects.get(id=id)
-
+        if info.context.user.is_authenticated and info.context.user.has_perm('auth.view_user'):
+            return User.objects.get(id=id)
+        raise Exception('Cannot query field `user` on type `Query`')
 
 schema = graphene.Schema(query=Query)
