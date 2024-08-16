@@ -6,6 +6,10 @@ User = get_user_model()
 
 
 def should_filter_field(name, context):
+    """
+    Determines whether a field should be filtered out based on the user's permissions.
+    """
+
     return name == 'user' and not (context.user.is_authenticated and context.user.has_perm('auth.view_user'))
 
 
@@ -35,6 +39,10 @@ class Query(graphene.ObjectType):
                           description='Gets single User by ID')
 
     def resolve_user(self, info, id):
+        """
+        Resolves a single User object based on the provided ID, with permission checks.
+        """
+
         if info.context.user.is_authenticated and info.context.user.has_perm('auth.view_user'):
             return User.objects.get(id=id)
         raise Exception('Cannot query field `user` on type `Query`')
