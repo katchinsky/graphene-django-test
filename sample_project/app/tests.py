@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Permission
 from graphene.test import Client
 from django.test import TestCase
-from graphene_user.secure_user.schema import schema, User
+from sample_project.app.schema import schema, User
 from collections import namedtuple
 
 

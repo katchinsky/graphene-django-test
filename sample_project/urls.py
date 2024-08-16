@@ -1,5 +1,5 @@
 """
-URL configuration for graphene_user project.
+URL configuration for sample_project project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -19,7 +19,7 @@ from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
 
 from graphene_django.views import GraphQLView
-from graphene_user.secure_user.schema import schema
+from sample_project.app.schema import schema
 
 urlpatterns = [
     path('admin/', admin.site.urls),
