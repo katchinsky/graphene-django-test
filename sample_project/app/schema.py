@@ -10,6 +10,10 @@ def should_filter_field(name, context):
 
 
 def permission_check_fields_resolver(object_type, info, **kwargs):
+    """
+    A custom resolver that filters the fields of a GraphQL type based on user permissions.
+    """
+
     filtered_fields = [
         (name, value) for name, value in object_type.fields.items() if not should_filter_field(name, info.context)
     ]
@@ -37,6 +41,13 @@ class Query(graphene.ObjectType):
 
 
 class PermissionCheckSchema(graphene.Schema):
+    """
+    A custom GraphQL schema that enforces user permission checks on type fields.
+
+    This schema overrides the default behavior of the GraphQL `__Type` introspection
+    by injecting a custom resolver that applies user permission checks on the fields.
+    """
+
     def __init__(self, query):
         super().__init__(query=query)
         self.graphql_schema.type_map['__Type'].fields['fields'].resolve = permission_check_fields_resolver
